@@ -8,6 +8,7 @@
   "main": "lib/index.js",
   "style": "lib/css/react-big-calendar.css",
   "files": [
+    "src/",
     "lib/",
     "LICENSE",
     "README.md",
