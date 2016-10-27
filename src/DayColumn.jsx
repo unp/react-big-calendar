@@ -166,7 +166,7 @@ let DaySlot = React.createClass({
           })}
         >
           <div className='rbc-event-label'>{label}</div>
-          <div className='rbc-event-content'>
+          <div className='rbc-event-content' style={{background: '#ff0000'}}>
             { EventComponent
               ? <EventComponent event={event} title={title}/>
               : title
