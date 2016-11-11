@@ -10,6 +10,8 @@ import localizer from './localizer'
 import { notify } from './utils/helpers';
 import { accessor } from './utils/propTypes';
 import { accessor as get } from './utils/accessors';
+import { Popup } from 'semantic-ui-react';
+// import './semantic/semantic.less';
 
 import TimeColumn from './TimeColumn'
 
@@ -129,7 +131,7 @@ let DaySlot = React.createClass({
     let {
       events, step, min, culture, eventPropGetter
       , selected, eventTimeRangeFormat, eventComponent
-      , startAccessor, endAccessor, titleAccessor } = this.props;
+      , startAccessor, endAccessor, titleAccessor, eventEdit, onDelete } = this.props;
 
     let EventComponent = eventComponent
       , lastLeftOffset = 0;
@@ -154,25 +156,35 @@ let DaySlot = React.createClass({
       if (eventPropGetter)
         var { style: xStyle, className } = eventPropGetter(event, start, end, _isSelected);
 
-      return (
-        <div
-          key={'evt_' + idx}
-          style={{...xStyle, ...style}}
-          title={label + ': ' + title }
-          onClick={this._select.bind(null, event)}
-          className={cn('rbc-event', className, {
-            'rbc-selected': _isSelected,
-            'rbc-event-overlaps': lastLeftOffset !== 0
-          })}
-        >
-          <div className='rbc-event-label'>{label}</div>
-          <div className='rbc-event-content' style={{background: '#ff0000'}}>
-            { EventComponent
-              ? <EventComponent event={event} title={title}/>
-              : title
-            }
-          </div>
+      const eventComponent = <div
+        key={'evt_' + idx}
+        style={{...xStyle, ...style}}
+        title={label + ': ' + title }
+        onClick={this._select.bind(null, event)}
+        className={cn('rbc-event', className, {
+          'rbc-selected': _isSelected,
+          'rbc-event-overlaps': lastLeftOffset !== 0
+        })}
+      >
+        <div className='rbc-event-label'>{label}</div>
+        <div className='rbc-event-content'>
+          { EventComponent
+            ? <EventComponent event={event} title={title}/>
+            : title
+          }
         </div>
+      </div>;
+
+      const EventEdit = eventEdit;
+
+      return (
+        <Popup
+          trigger={eventComponent}
+          on='click'
+          positioning='right center'
+        >
+          <EventEdit onDelete={onDelete} />
+        </Popup>
       )
     })
   },
@@ -222,6 +234,8 @@ let DaySlot = React.createClass({
     let selectionState = ({ y }) => {
       let { step, min, max } = this.props;
       let { top, bottom } = getBoundsForNode(node)
+      console.log('selected: ', this.props.selected);
+      console.log('selectionState', y);
 
       let mins = this._totalMin;
 
