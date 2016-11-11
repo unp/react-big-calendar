@@ -11,7 +11,6 @@ import { notify } from './utils/helpers';
 import { accessor } from './utils/propTypes';
 import { accessor as get } from './utils/accessors';
 import { Popup } from 'semantic-ui-react';
-// import './semantic/semantic.less';
 
 import TimeColumn from './TimeColumn'
 
