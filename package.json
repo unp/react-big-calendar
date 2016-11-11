@@ -1,6 +1,6 @@
 {
   "name": "react-big-calendar",
-  "version": "0.13.7",
+  "version": "0.13.8",
   "description": "Calendar! with events",
   "author": "Jason Quense <monastic.panic@gmail.com>",
   "repository": "unp/react-big-calendar",
@@ -35,7 +35,8 @@
     "storybook": "start-storybook -p 9002",
     "test": "npm run lint",
     "tdd": "karma start",
-    "release": "release"
+    "release": "release",
+    "postinstall": "build"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0",
