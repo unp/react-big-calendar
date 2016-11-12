@@ -89,7 +89,11 @@ let DaySlot = React.createClass({
   },
 
   _handleDeleteKey(event) {
-    if(event.code === 'Backspace' && this.props.selected) {
+    if(event.code === 'Backspace'
+      && this.props.selected
+      && event.target.tagName.toLowerCase() !== 'input'
+      && event.target.tagName.toLowerCase() !== 'textarea'
+    ) {
       this.props.onDelete(this.props.selected.id);
     }
   },
