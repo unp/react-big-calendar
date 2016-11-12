@@ -66,6 +66,10 @@ let DaySlot = React.createClass({
     return { selecting: false };
   },
 
+  componentWillMount() {
+    document.addEventListener("keydown", this._handleDeleteKey, false);
+  },
+
 
   componentDidMount() {
     this.props.selectable
@@ -73,6 +77,7 @@ let DaySlot = React.createClass({
   },
 
   componentWillUnmount() {
+    document.removeEventListener("keydown", this._handleDeleteKey, false);
     this._teardownSelectable();
   },
 
@@ -81,6 +86,12 @@ let DaySlot = React.createClass({
       this._selectable();
     if (!nextProps.selectable && this.props.selectable)
       this._teardownSelectable();
+  },
+
+  _handleDeleteKey(event) {
+    if(event.code === 'Backspace' && this.props.selected) {
+      this.props.onDelete(this.props.selected.id);
+    }
   },
 
   render() {
@@ -181,8 +192,9 @@ let DaySlot = React.createClass({
           trigger={eventComponent}
           on='click'
           positioning='right center'
+          style={{ marginTop: '-1em' }}
         >
-          <EventEdit onDelete={onDelete} />
+          <EventEdit onDelete={onDelete} event={event} />
         </Popup>
       )
     })
@@ -233,8 +245,6 @@ let DaySlot = React.createClass({
     let selectionState = ({ y }) => {
       let { step, min, max } = this.props;
       let { top, bottom } = getBoundsForNode(node)
-      console.log('selected: ', this.props.selected);
-      console.log('selectionState', y);
 
       let mins = this._totalMin;
 
