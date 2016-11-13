@@ -171,7 +171,6 @@ let DaySlot = React.createClass({
         var { style: xStyle, className } = eventPropGetter(event, start, end, _isSelected);
 
       const eventComponent = <div
-        key={'evt_' + idx}
         style={{...xStyle, ...style}}
         title={label + ': ' + title }
         onClick={this._select.bind(null, event)}
@@ -197,6 +196,7 @@ let DaySlot = React.createClass({
           on='click'
           positioning='right center'
           style={{ marginTop: '-1em' }}
+          key={'evt_' + idx}
         >
           <EventEdit onDelete={onDelete} event={event} />
         </Popup>
